@@ -12,8 +12,12 @@ namespace spp_first_lab
         {
         }
 
-        public class ToSort
+        public class QuickSort
         {
+            public void ToSort(int[] a, int v, int length)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

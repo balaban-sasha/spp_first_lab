@@ -11,6 +11,17 @@ namespace spp_first_lab
     {
         static void Main(string[] args)
         {
+            QuickSort quickSort = new QuickSort();
+            Random random = new Random();
+            int[] a = new int[100];
+            for (int i = 0; i < a.Length; i++)
+                a[i] = random.Next(-10000, 10000);
+            quickSort.ToSort(a, 0, a.Length - 1);
+            foreach (var temp in a)
+                Console.Write("{0} ", temp);
+            Console.ReadKey();
+
+
         }
 
         public class QuickSort
@@ -21,29 +32,28 @@ namespace spp_first_lab
                 int middleElement = array[left + (right - left) / 2];
                 int i = left;
                 int j = right;
-                while(comparer.Compare(i,j)!=(-1))
+                while(i<=j)
                 {
-                    while (comparer.Compare(array[i], middleElement) == 1)
-                        i++;
-                    while (comparer.Compare(array[j], middleElement) == (-1))
-                        j--;
-                    if(comparer.Compare(i,j)!=(-1))
+                    while (comparer.Compare(array[i], middleElement) == (1))i++;
+                    while (comparer.Compare(array[j], middleElement) == (-1)) j--;
+                    if(i <= j)
                     {
                         Swap(array, i, j);
                         i++;
-                        j++;
+                        j--;
                     }
                 }
                 if (comparer.Compare(i, right) == 1)
                     ToSort(array, i, right);
                 if (comparer.Compare(left, j) == 1)
                     ToSort(array, left, j);
-                throw new NotImplementedException();
             }
 
             private void Swap(int[] array, int i, int j)
             {
-                throw new NotImplementedException();
+                int tempElement = array[i];
+                array[i] = array[j];
+                array[j] = tempElement;
             }
         }
         public class ClassForCompare:IComparer

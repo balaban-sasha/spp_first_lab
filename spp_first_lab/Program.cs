@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace spp_first_lab
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
+        {
+        }
+
+        public class ToSort
         {
         }
     }

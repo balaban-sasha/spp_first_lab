@@ -13,7 +13,9 @@ namespace spp_first_lab
         {
             QuickSort quickSort = new QuickSort();
             Random random = new Random();
-            int[] a = new int[100];
+            int numberOfElements;
+            numberOfElements = Convert.ToInt32(Console.ReadLine());
+            int[] a = new int[numberOfElements];
             for (int i = 0; i < a.Length; i++)
                 a[i] = random.Next(-10000, 10000);
             quickSort.ToSort(a, 0, a.Length - 1);

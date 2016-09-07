@@ -14,16 +14,18 @@ namespace spp_first_lab
             QuickSort quickSort = new QuickSort();
             Random random = new Random();
             int numberOfElements;
-            numberOfElements = Convert.ToInt32(Console.ReadLine());
-            int[] a = new int[numberOfElements];
-            for (int i = 0; i < a.Length; i++)
-                a[i] = random.Next(-10000, 10000);
-            quickSort.ToSort(a, 0, a.Length - 1);
-            foreach (var temp in a)
-                Console.Write("{0} ", temp);
-            Console.ReadKey();
-
-
+            bool result = Int32.TryParse(Console.ReadLine(), out numberOfElements);
+            if (result)
+                if (numberOfElements >= 0)
+                {
+                    int[] array = new int[numberOfElements];
+                    for (int i = 0; i < array.Length; i++)
+                        array[i] = random.Next(-10000, 10000);
+                    quickSort.ToSort(array, 0, array.Length - 1);
+                    foreach (var temp in array)
+                        Console.Write("{0} ", temp);
+                    Console.ReadKey();
+                }
         }
 
         public class QuickSort
@@ -36,8 +38,10 @@ namespace spp_first_lab
                 int j = right;
                 while(i<=j)
                 {
-                    while (comparer.Compare(array[i], middleElement) == (1))i++;
-                    while (comparer.Compare(array[j], middleElement) == (-1)) j--;
+                    while (comparer.Compare(array[i], middleElement) == (1))
+                        i++;
+                    while (comparer.Compare(array[j], middleElement) == (-1))
+                        j--;
                     if(i <= j)
                     {
                         Swap(array, i, j);

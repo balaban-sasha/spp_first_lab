@@ -1,73 +1,102 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace spp_first_lab
 {
-    public class Program
+  public class Program
+  {
+    private static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            QuickSort quickSort = new QuickSort();
-            Random random = new Random();
-            int numberOfElements;
-            bool result = Int32.TryParse(Console.ReadLine(), out numberOfElements);
-            if (result)
-                if (numberOfElements >= 0)
-                {
-                    int[] array = new int[numberOfElements];
-                    for (int i = 0; i < array.Length; i++)
-                        array[i] = random.Next(-10000, 10000);
-                    quickSort.ToSort(array, 0, array.Length - 1);
-                    foreach (var temp in array)
-                        Console.Write("{0} ", temp);
-                    Console.ReadKey();
-                }
-        }
+      Program.QuickSort quickSort = new Program.QuickSort();
+      Random random = new Random();
+      int[] array = new int[Convert.ToInt32(Console.ReadLine())];
+      for (int index = 0; index < array.Length; ++index)
+        array[index] = random.Next(-10000, 10000);
+      quickSort.ToSort(array, 0, array.Length - 1);
+      //foreach has been changed on for because it use more IL code
+      for(int index = 0;index<array.Length; ++index)
+        Console.Write("{0} ", (object) array[index]);
+      Console.ReadKey();
+    }
 
-        public class QuickSort
+    public class QuickSort
+    {
+      private IComparer comparer = (IComparer) new Program.ClassForCompare();
+
+      public void ToSort(int[] array, int left, int right)
+      {
+        int num = array[left + (right - left) / 2 + 1];
+        int i = left;
+        int j = right;
+        while (i <= j)
         {
-            IComparer comparer = new ClassForCompare();
+          while (comparer.Compare(array[i], num) == 1)
+            ++i;
+          while (comparer.Compare( array[j],  num) == -1)
+            --j;
+          if (i <= j)
+          {
+            Swap(array, i, j);
+            i++;
+            j--;
+          }
+        }
+        if (comparer.Compare(i, right) == 1)
+          ToSort(array, i, right);
+        if (comparer.Compare( left, j) == 1)
+          ToSort(array, left, j);
+      }
+
+      private void Swap(int[] array, int i, int j)
+      {
+        int num = array[i];
+        array[i] = array[j];
+        array[j] = num;
+      }
+    }
+        public class OptimizedQuickSort
+        {
+
+            private IComparer comparer = (IComparer)new Program.ClassForCompare();
+
             public void ToSort(int[] array, int left, int right)
             {
-                int middleElement = array[left + (right - left) / 2];
-                int i = left;
-                int j = right;
-                while(i<=j)
+                int num = array[left + (right - left) / 2 + 1];
+                int index1 = left;
+                int index2 = right;
+                while (index1 <= index2)
                 {
-                    while (comparer.Compare(array[i], middleElement) == (1))
-                        i++;
-                    while (comparer.Compare(array[j], middleElement) == (-1))
-                        j--;
-                    if(i <= j)
+                    while (this.comparer.Compare((object)array[index1], (object)num) == 1)
+                        ++index1;
+                    while (this.comparer.Compare((object)array[index2], (object)num) == -1)
+                        --index2;
+                    if (index1 <= index2)
                     {
-                        Swap(array, i, j);
-                        i++;
-                        j--;
+                        this.Swap(array, index1, index2);
+                        ++index1;
+                        --index2;
                     }
                 }
-                if (comparer.Compare(i, right) == 1)
-                    ToSort(array, i, right);
-                if (comparer.Compare(left, j) == 1)
-                    ToSort(array, left, j);
+                if (this.comparer.Compare((object)index1, (object)right) == 1)
+                    this.ToSort(array, index1, right);
+                if (this.comparer.Compare((object)left, (object)index2) != 1)
+                    return;
+                this.ToSort(array, left, index2);
             }
 
             private void Swap(int[] array, int i, int j)
             {
-                int tempElement = array[i];
+                int num = array[i];
                 array[i] = array[j];
-                array[j] = tempElement;
+                array[j] = num;
             }
         }
-        public class ClassForCompare:IComparer
-        {
-            int IComparer.Compare(Object firstElement,Object secondElement)
-            {
-                return ((new CaseInsensitiveComparer()).Compare(secondElement, firstElement));
-            }
-        }
+        public class ClassForCompare : IComparer
+    {
+      int IComparer.Compare(object firstElement, object secondElement)
+      {
+        return new CaseInsensitiveComparer().Compare(secondElement, firstElement);
+      }
     }
+  }
 }

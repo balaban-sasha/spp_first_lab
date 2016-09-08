@@ -9,16 +9,29 @@ namespace UnitTestProject1
 {
     public class TheEasiestBenchmark
     {
-        [Benchmark(Description = "Summ100")]
-        public void Test100()
+        [Benchmark(Description = "Test1")]
+        public void Test1()
         {
-            Program.QuickSort QuickSort = new Program.QuickSort();
+            Program.OptimizedQuickSort QuickSort = new Program.OptimizedQuickSort();
             Random random = new Random();
             int[] array = new int[100];
             for (int i = 0; i < array.Length; i++)
                 array[i] = random.Next(-10000, 10000);
             QuickSort.ToSort(array, 0, array.Length - 1);
+            for (int i = 0; i < array.Length; i++)
+                array[i] = random.Next(-10000, 10000);
+            QuickSort.ToSort(array, 0, array.Length - 1);   
+        }
 
+        [Benchmark(Description = "Test2")]
+        public void Test2()
+        {
+            Program.QuickSort QuickSort = new Program.QuickSort();
+            Random random = new Random();
+            int[] array = new int[100];
+            for (int index = 0; index < array.Length; index++)
+                array[index] = random.Next(-10000, 10000);
+            QuickSort.ToSort(array, 0, array.Length - 1);
             for (int i = 0; i < array.Length; i++)
                 array[i] = random.Next(-10000, 10000);
             QuickSort.ToSort(array, 0, array.Length - 1);
@@ -28,19 +41,6 @@ namespace UnitTestProject1
     [TestClass]
     public class UnitTest1
     {
-
-        [TestMethod]
-        public void TestOnStandartWorkingOfQuickSort()
-        {
-            Program.QuickSort QuickSort = new Program.QuickSort();
-            Random random = new Random();
-            int[] array = new int[100];
-            for (int i = 0; i < array.Length; i++)
-                array[i] = random.Next(-10000, 10000);
-            QuickSort.ToSort(array, 0, array.Length - 1);
-            foreach (var temp in array)
-                Console.Write("{0} ", temp);
-        }
         [TestMethod]
         public void TestOnReverseArray()
         {
@@ -48,10 +48,22 @@ namespace UnitTestProject1
             Random random = new Random();
             int[] array = new int[100];
             for (int i = 0; i < array.Length; i++)
-                array[i] = i*(-1);
+                array[i] = i * (-1);
             QuickSort.ToSort(array, 0, array.Length - 1);
             foreach (var temp in array)
                 Console.Write("{0} ", temp);
+        }
+        [TestMethod]
+        public void TestOnStandartWorkingOfQuickSort()
+        {
+            Program.QuickSort QuickSort = new Program.QuickSort();
+            Random random = new Random();
+            int[] array = new int[1000];
+            for (int i = 0; i < array.Length; i++)
+                array[i] = random.Next(-10000, 10000);
+            QuickSort.ToSort(array, 0, array.Length - 1);
+            for (int index = 0; index < array.Length; ++index)
+                Console.Write("{0} ", (object)array[index]);
         }
         [TestMethod]
         public void TestMethod2()

@@ -7,16 +7,22 @@ namespace spp_first_lab
   {
     private static void Main(string[] args)
     {
-      Program.QuickSort quickSort = new Program.QuickSort();
-      Random random = new Random();
-      int[] array = new int[Convert.ToInt32(Console.ReadLine())];
-      for (int index = 0; index < array.Length; ++index)
-        array[index] = random.Next(-10000, 10000);
-      quickSort.ToSort(array, 0, array.Length - 1);
-      //foreach has been changed on for because it use more IL code
-      for(int index = 0;index<array.Length; ++index)
-        Console.Write("{0} ", (object) array[index]);
-      Console.ReadKey();
+            Program.QuickSort quickSort = new Program.QuickSort();
+            Random random = new Random();
+            int numberOfElements;
+            bool result = Int32.TryParse(Console.ReadLine(), out numberOfElements);
+            if (result)
+                if (numberOfElements > 0)
+                {
+                    int[] array=new int[numberOfElements];
+                    for (int index = 0; index < array.Length; ++index)
+                        array[index] = random.Next(-10000, 10000);
+                    quickSort.ToSort(array, 0, array.Length - 1);
+                    //foreach has been changed on for because it use more IL code
+                    for (int index = 0; index < array.Length; ++index)
+                        Console.Write("{0} ", (object)array[index]);
+                    Console.ReadKey();
+                }
     }
 
     public class QuickSort
